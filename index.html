@@ -1,0 +1,124 @@
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  .view {
+    scrollbar-color: red yellow;
+    scrollbar-color: dark;
+  }
+  html {
+  --scrollbarBG: #90A4AE;
+  --scrollbarBG: black;
+  --thumbBG: darkolivegreen;
+}
+*::-webkit-scrollbar {
+  width: 11px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+*::-webkit-scrollbar-corner {
+  background: var(--scrollbarBG);
+}
+#infi {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.controls {
+  flex-grow: 0;
+}
+.view {
+  overflow: auto;
+  width: min(100%, 300px);
+  height: min(100%, 300px);
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  flex-grow: 1;
+}
+.view:hover {
+  resize: both;
+}
+html {
+  font-size: 17pt;
+}
+</style>
+
+<script>
+  url = 'https://cdn.jsdelivr.net/gh/OpenExoplanetCatalogue/oec_tables@master/comma_separated/open_exoplanet_catalogue.txt';
+</script>
+
+<!-- <script src="./space-vis.js"></script> -->
+<script src="./space-vis.dist.js"></script>
+<style>
+  #vid:checked + .content {
+    display: unset;
+    visibility: unset;
+  }
+  #vid + .content > iframe {
+    display: unset;
+  }
+  .popup > .content {
+    visibility: hidden;
+  }
+  .popup {
+    position: relative;
+    z-index: 1;
+  }
+  .popup > .content {
+    position: absolute;
+    top: 75%;
+    left: 0px;
+  }
+  .popup > input + .content:hover,
+  .popup:hover > input + .content,
+  .popup > input:hover + .content {
+    /* display: block; */
+    visibility: unset;
+  }
+  .inline {
+    display: inline-block;
+  }
+</style>
+<div id="infi">
+  <div>
+    <input type="number" min="0" max="999999"/>
+    <input type="number" min="0" max="999999"/>
+    <input type="number" min="0" max="15"/>
+    <select id="opts" onchange="goto(event)" onclick="stop()"></select>
+    <label for="vid">
+      <!-- ♪ ♫ ♬ ♭ ♮ ♯  -->
+      🎼
+    </label>
+    <div class="popup inline">
+      <input id="vid" type="checkbox"/>
+      <div class="content">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/F_BuZQW0hnM?si=5MFwcP1vluYfk6tk?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+    <input type="range" id="c_fps" min="1" max="60" oninput="ontickchange(event.target.value)">
+    <span id="fps"></span>
+  </div>
+  <div class="view" id="view" style="position: relative;" onscroll="onScroll(event, putDivAtPos)">
+    <div id="infiView" style="position: absolute;"></div>
+    <div style="width: 999999px; height: 999999px"></div>
+  </div>
+</div>
